@@ -1,11 +1,10 @@
-package file
+package fil
 
 import (
   "os"
   "path/filepath"
   "os/exec"
 	"errors"
-	"fmt"
 	"io"
 	"io/ioutil"
 )
@@ -63,32 +62,26 @@ type CpArgs struct {
 }
 
 // Cp is like `cp`
-func Cp(src, dest string) (err error) {
-	return CpWithArgs(src, dest, CpArgs{})
+func Cp(src, dest string) error {
+  return CpWithArgs(src, dest, CpArgs{PreserveLinks: true})
 }
 
-func cpSymlink(src, dest string) (err error) {
-	var linkTarget string
-	linkTarget, err = os.Readlink(src)
+func cpSymlink(src, dest string) error {
+  linkTarget, err := os.Readlink(src)
 	if err != nil {
-		return
+		return err
 	}
-
 	return os.Symlink(linkTarget, dest)
 }
 
-func cpFollowLinks(src, dest string) (err error) {
-	return CpWithArgs(src, dest, CpArgs{})
-}
-
-func cpPreserveLinks(src, dest string) (err error) {
-	return CpWithArgs(src, dest, CpArgs{PreserveLinks: true})
+func CpFollowSymlink(src, dest string) error {
+  return CpWithArgs(src, dest, CpArgs{PreserveLinks: false})
 }
 
 /*
 CpR is like `cp -R`
 */
-func CpR(source, dest string) (err error) {
+func CpR(source, dest string) error {
 	return CpWithArgs(source, dest, CpArgs{Recursive: true, PreserveLinks: true})
 }
 
@@ -109,7 +102,7 @@ func CpWithArgs(source, dest string, args CpArgs) (err error) {
 		}
 
 		// ensure dest dir does not already exist
-		if _, err = os.Open(dest); !os.IsNotExist(err) {
+    if _, err := os.Open(dest); !os.IsNotExist(err) {
 			return errors.New("destination already exists")
 		}
 
@@ -124,10 +117,7 @@ func CpWithArgs(source, dest string, args CpArgs) (err error) {
 		}
 
 		for _, file := range files {
-			sourceFilePath := fmt.Sprintf("%s/%s", source, file.Name())
-			destFilePath := fmt.Sprintf("%s/%s", dest, file.Name())
-
-			if err = CpWithArgs(sourceFilePath, destFilePath, args); err != nil {
+			if err = CpWithArgs(source+"/"+file.Name(), dest+"/"+file.Name(), args); err != nil {
 				return err
 			}
 		}

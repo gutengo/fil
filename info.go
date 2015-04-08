@@ -1,24 +1,29 @@
-package file
+package fil
 
-type Info struct {
+import (
+  "os"
+)
 
+/*
+type Path struct {
 }
 
-func GetInfo(path string) (Info, error) {
-	_, err := os.Stat(path)
+func New(path string) (Path, error) {
+  fi, err := os.Lstat(path)
   if err != nil {
-    if os.IsNotExist(err) {
-      return false, nil
-    } else {
-      return false, err
-    }
+    return fi, err
   }
-  return true, nil
+  return fi, err
 }
+
+func (p *Path) IsExists() bool {
+  xx
+}
+*/
 
 
 // Exists checks whether the given file exists or not.
-func Exists(path string) (bool, error) {
+func IsExists(path string) (bool, error) {
 	_, err := os.Stat(path)
   if err != nil {
     if os.IsNotExist(err) {
@@ -28,6 +33,39 @@ func Exists(path string) (bool, error) {
     }
   }
   return true, nil
+}
+
+func TypeFileInfo(fi os.FileInfo) string {
+  m := fi.Mode()
+  switch {
+  case m.IsDir():
+    return "dir"
+  case m.IsRegular():
+    return "regular"
+  case m & os.ModeSymlink != 0:
+    return "symlink"
+  case m & os.ModeNamedPipe != 0:
+    return "namedpipe"
+  case m & os.ModeSocket != 0:
+    return "socket"
+  case m & os.ModeDevice != 0:
+    return "device"
+  default:
+    return ""
+  }
+}
+
+func Type(path string) (string, error) {
+  fi, err := os.Lstat(path)
+  if err != nil {
+    return "", err
+  }
+  return TypeFileInfo(fi), nil
+}
+
+func IsNotExist(path string) (bool, error) {
+  ret, err := IsExists(path)
+  return ! ret, err
 }
 
 func IsFile(path string) (bool, error) {
