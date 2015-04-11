@@ -3,7 +3,7 @@ fil, a go library
 
 [![API](http://img.shields.io/badge/api-godoc-blue.svg?style=flat-square)](http://godoc.org/github.com/gutengo/fil)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](http://choosealicense.com/licenses/mit)
-[![Gratipay](https://img.shields.io/gratipay/%%github.username%%.svg?style=flat-square)](https://gratipay.com/gutenye)
+[![Gratipay](https://img.shields.io/gratipay/gutenye.svg?style=flat-square)](https://gratipay.com/gutenye)
 
 Copyright
 ---------
