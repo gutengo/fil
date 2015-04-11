@@ -1,14 +1,9 @@
-file, a go library
+fil, a go library
 ================
 
-|                |                                           |
-|----------------|------------------------------------------ |
-| Homepage:      | https://github.com/GutenYe/file        |
-| Author:	       | Guten                                     |
-| License:       | MIT                                       |
-| Documentation: | https://github.com/GutenYe/file/wiki
-| Issue Tracker: | https://github.com/GutenYe/file/issues |
-
+[![API](http://img.shields.io/badge/api-godoc-blue.svg?style=flat-square)](http://godoc.org/github.com/gutengo/fil)
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](http://choosealicense.com/licenses/mit)
+[![Gratipay](https://img.shields.io/gratipay/%%github.username%%.svg?style=flat-square)](https://gratipay.com/gutenye)
 
 Copyright
 ---------
